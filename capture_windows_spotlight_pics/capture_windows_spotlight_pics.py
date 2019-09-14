@@ -17,7 +17,9 @@ def copy_files(src_dir, dest_dir):
     files = os.listdir(src_dir)
     for file in files:
         temp = src_dir + '/' + file
-        shutil.copy(temp, dest_dir)
+        file_size = os.path.getsize(temp)
+        if file_size > 5000:# 5000 字节以上 才复制
+            shutil.copy(temp, dest_dir)
 
 
 def rename_files(src_dir, dest_dir):
@@ -29,7 +31,11 @@ def rename_files(src_dir, dest_dir):
     files = os.listdir(src_dir)
     for file in files:
         temp = src_dir + '/' + file
-        os.rename(temp, temp+'.jpg')
+        try:
+            os.rename(temp, temp+'.jpg')
+        except Exception as e:
+            os.remove(temp)
+
 
 def del_files(src_dir):
     """
@@ -44,7 +50,9 @@ def del_files(src_dir):
 os_user_name = getpass.getuser()
 path = r'C:/Users/' + os_user_name + r'/AppData/Local/Packages/Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy/LocalState/Assets/'
 destination = r'F:/myTest/windows聚焦壁纸/temp/'
-del_files(destination)
+# del_files(destination)
 copy_files(path, destination)
 rename_files(destination, destination)
+
+
 
