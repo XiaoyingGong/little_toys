@@ -31,9 +31,20 @@ def rename_files(src_dir, dest_dir):
         temp = src_dir + '/' + file
         os.rename(temp, temp+'.jpg')
 
+def del_files(src_dir):
+    """
+    删除目标文件夹下的所有文件/没有递归删除文件的能力
+    :param src_dir:
+    :return:
+    """
+    files = os.listdir(src_dir)
+    for file in files:
+        os.remove(src_dir + file)
 
 os_user_name = getpass.getuser()
 path = r'C:/Users/' + os_user_name + r'/AppData/Local/Packages/Microsoft.Windows.ContentDeliveryManager_cw5n1h2txyewy/LocalState/Assets/'
 destination = r'F:/myTest/windows聚焦壁纸/temp/'
+del_files(destination)
 copy_files(path, destination)
 rename_files(destination, destination)
+
